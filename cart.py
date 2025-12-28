@@ -1,4 +1,4 @@
-def add_to_cart(pid, qty):
+def add_to_cart(pid, qty):  #sepete ürün ekleme
     if pid not in products:
         return "Ürün bulunamadı."
 
@@ -9,11 +9,11 @@ def add_to_cart(pid, qty):
     return "Eklendi."
 
 
-def remove_from_cart(pid):
+def remove_from_cart(pid):   #sepetteki ürünü kaldırma
     cart.pop(pid, None)
 
 
-def update_quantity(pid, qty):
+def update_quantity(pid, qty): #sepetteki ürün miktarını güncelleme
     if qty == 0:
         remove_from_cart(pid)
         return
@@ -24,19 +24,14 @@ def update_quantity(pid, qty):
     cart[pid] = qty
 
 
-def clear_cart():
+def clear_cart():   #sepeti temizleme
     cart.clear()
 
 
 # ---------- PROMOSYON KODLARI ----------
 
-promo_codes = {
-    "SAVE10": {"type": "percent", "value": 10},
-    "DISCOUNT50": {"type": "fixed", "value": 50},
-    "FREESHIP": {"type": "free_shipping", "value": 0},
-}
-
-def apply_promo(code):
+promo_codes = {}
+def apply_promo(code):   #promosyon kodu uygulama
     global promo
     if code not in promo_codes:
         return "Kod geçersiz."
@@ -46,7 +41,7 @@ def apply_promo(code):
 
 # ---------- HESAPLAMA ----------
 
-def cart_summary():
+def cart_summary():   #sepet özeti
     subtotal = sum(products[pid]["price"] * qty for pid, qty in cart.items())
     tax = subtotal * 0.18
     discount = 0
@@ -71,7 +66,7 @@ def cart_summary():
     }
 # ---------- CHECKOUT ----------
 
-def checkout():
+def checkout():        #ödeme işlemi
     for pid, qty in cart.items():
         if qty > products[pid]["stock"]:
             return "Stok yetersiz! Satın alma engellendi."
